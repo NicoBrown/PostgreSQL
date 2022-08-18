@@ -1,0 +1,45 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "1.0.0",
+    "problemMatcher": [],
+    "tasks": [{
+            "type": "shell",
+            "label": "build project",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "set postgres",
+                "postgres",
+                "change db"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        },
+        {
+            "label": "set postgres",
+            "type": "shell",
+            "command": "set_pg",
+            "options": {
+                "cwd": "${env:HOME}"
+            }
+        },
+        {
+            "label": "postgres",
+            "type": "shell",
+            "command": "psql",
+            "options": {
+                "cwd": "${env:HOME}"
+            }
+        },
+        {
+            "label": "change db",
+            "type": "shell",
+            "command": "c chinook",
+            "options": {
+                "cwd": "${env:HOME}"
+            }
+        }
+    ],
+}
