@@ -1,6 +1,8 @@
 from sqlalchemy import (
-    create_engine, Table, Column, Float, ForeignKey, Integer, String, MetaData
+    create_engine, Column, Integer, String
 )
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 # executing the instructions from our localhost "chinook" db
 db = create_engine("postgresql:///chinook")

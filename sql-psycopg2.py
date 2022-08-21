@@ -1,24 +1,39 @@
 import psycopg2
 import pytermgui as ptg
 
-# Connect to chinook database using connect method
-connection = psycopg2.connect(database="chinook")
+# # Connect to chinook database using connect method
+# connection = psycopg2.connect(database="chinook")
 
-# set cursor up to accept commands
-cursor = connection.cursor()
+# # set cursor up to accept commands
+# cursor = connection.cursor()
 
-# cursor commands
-cursor.execute('SELECT * FROM "Artist"')
+# # cursor commands
+# cursor.execute('SELECT * FROM "Artist"')
 
-# method used to fetch all results
-results = cursor.fetchall()
+# # method used to fetch all results
+# results = cursor.fetchall()
 
-# placehodler method to collect one result
-# results = cursor.fetchone()
+# # placehodler method to collect one result
+# # results = cursor.fetchone()
 
-# close connection
-connection.close()
+# # close connection
+# connection.close()
 
+
+OUTPUT = {}
+
+
+def submit(manager: ptg.WindowManager, window: ptg.Window) -> None:
+    for widget in window:
+        if isinstance(widget, ptg.InputField):
+            OUTPUT[widget.prompt] = widget.value
+            continue
+
+        if isinstance(widget, ptg.Container):
+            label, field = iter(widget)
+            OUTPUT[label.value] = field.value
+
+    manager.stop()
 
 def run_Terminal_GUI():
     CONFIG = """
@@ -48,14 +63,12 @@ def run_Terminal_GUI():
     with ptg.WindowManager() as manager:
         window = (
             ptg.Window(
-                "",
                 "Search the Music Database here by entering\na value into one of the inputs and press enter:",
                 "",
                 ptg.InputField(" ", prompt="Album: "),
                 ptg.InputField(" ", prompt="Artist: "),
                 ptg.InputField(" ", prompt="Genre: "),
                 ptg.InputField(" ", prompt="Track: "),
-                "",
                 ptg.Button("submit"),
                 ["Submit", lambda *_: submit(manager, window)],
                 width=60,
@@ -69,6 +82,5 @@ def run_Terminal_GUI():
 
 run_Terminal_GUI()
 
-for result in results:
-    print(result)
-
+# for result in results:
+#     print(result)
